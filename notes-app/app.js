@@ -21,3 +21,7 @@ fs.writeFileSync('notes.txt', 'My name is Tahmid.');
 fs.appendFileSync('notes.txt','I am 25 years old');
 */
 
+/*---------Importing NPM Package-------*/
+const chalk = require('chalk');
+let greenmsg = chalk.green.bold.inverse('Success!!');
+console.log(greenmsg)
