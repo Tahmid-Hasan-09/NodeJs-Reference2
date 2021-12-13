@@ -22,17 +22,17 @@ fs.appendFileSync('notes.txt','I am 25 years old');
 */
 
 /*---------Importing NPM Package-------*/
-const chalk = require('chalk');
-let greenmsg = chalk.green.bold.inverse('Success!!');
-console.log(greenmsg)
+// const chalk = require('chalk');
+// let greenmsg = chalk.green.bold.inverse('Success!!');
+// console.log(greenmsg)
 
 /*---------Getting Input From User By Command Line Arguments-------*/
-const command = process.argv[2]
+// const command = process.argv[2]
 
-console.log(process.argv)
+// console.log(process.argv)
 
-if (command === 'add') {
-    console.log('Adding note!')
-} else if (command === 'remove') {
-    console.log('Removing note!')
-}
+// if (command === 'add') {
+//     console.log('Adding note!')
+// } else if (command === 'remove') {
+//     console.log('Removing note!')
+// }
