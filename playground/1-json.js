@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+/* 
 //Sample Obj Create
 const book = {
     title:'Ego is the Enemy',
@@ -24,3 +24,12 @@ const data = JSON.parse(dataJson)
 // console.log(dataBuffer)
 // console.log(dataJson)
 console.log(data.title)
+*/
+
+const dataBuffer = fs.readFileSync('1-json.json');
+const dataJson = dataBuffer.toString();
+const user = JSON.parse(dataJson);
+user.name = 'Gunther';
+user.age = 54;
+const userJson = JSON.stringify(user);
+fs.writeFileSync('1-json.json',userJson);
