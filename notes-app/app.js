@@ -37,6 +37,9 @@ fs.appendFileSync('notes.txt','I am 25 years old');
 //     console.log('Removing note!')
 // }
 
+/*---------Importing Own Files-------*/
+const notes = require('./notes.js')
+
 /*---------Manipulate Command Line Arguments By 'yargs' package-------*/
 const yargs = require('yargs');
 yargs.version('1.1.1');
