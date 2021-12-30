@@ -59,10 +59,13 @@ yargs.command({
             type:'string'
         }
     },
-    handler:function(argv){
-        console.log(`Title:${argv.title}`);
-        console.log(`Body:${argv.body}`);
+    handler: function (argv) {
+        notes.addNote(argv.title, argv.body)
     }
+    // handler:function(argv){
+    //     console.log(`Title:${argv.title}`);
+    //     console.log(`Body:${argv.body}`);
+    // }
 })
 //remove add comand
 yargs.command({
