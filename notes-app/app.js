@@ -22,7 +22,7 @@ fs.appendFileSync('notes.txt','I am 25 years old');
 */
 
 /*---------Importing NPM Package-------*/
-// const chalk = require('chalk');
+const chalk = require('chalk');
 // let greenmsg = chalk.green.bold.inverse('Success!!');
 // console.log(greenmsg)
 
