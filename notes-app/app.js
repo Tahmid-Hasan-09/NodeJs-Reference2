@@ -42,6 +42,7 @@ const notes = require('./notes.js')
 
 /*---------Manipulate Command Line Arguments By 'yargs' package-------*/
 const yargs = require('yargs');
+const { string } = require('yargs');
 yargs.version('1.1.1');
 //create add comand
 yargs.command({
@@ -94,8 +95,15 @@ yargs.command({
 yargs.command({
     command:'read',
     describe:'read a note',
-    handler:function(){
-        console.log('Reading A Note');
+    builder:{
+        title:{
+            describe:'Note Title',
+            demandOption:true,
+            type:'string'
+        }
+    },
+    handler:function(argv){
+        notes.readNote(argv.title);
     }
 })
 yargs.parse();
