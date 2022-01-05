@@ -11,3 +11,11 @@
 
 // console.log('Stopping')
 
+const request = require('request')
+
+const url = 'http://api.weatherstack.com/current?access_key=f5c5905d76ac22f35975a58445c02529&query=New%20York'
+
+request({ url: url }, (error, response) => {
+    const data = JSON.parse(response.body)
+    console.log(data.current)
+})
