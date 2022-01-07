@@ -14,16 +14,21 @@
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 // Request mapbox geocoding API
-geocode('Los Angels', (error, data) => {
-    if (error) {
-        return console.log(error);
-    }
-    console.log('Geocode', data);
-    //Request weatherstack API for forecast    
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+if (process.argv[2] === undefined) {
+    console.log('Please Enter a Location');
+} else {
+    const location = process.argv[2];
+    geocode(location, (error, data) => {
         if (error) {
-            return console.log(error)
+            return console.log(error);
         }
-        console.log(`${data.place} : ${forecastData}`)
+        console.log('Geocode', data);
+        //Request weatherstack API for forecast    
+        forecast(data.latitude, data.longitude, (error, forecastData) => {
+            if (error) {
+                return console.log(error)
+            }
+            console.log(`${data.place} : ${forecastData}`)
+        })
     })
-})
+}
