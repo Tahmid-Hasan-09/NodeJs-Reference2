@@ -19,7 +19,13 @@ request({
     url: url,
     json: true
 }, (error, response) => {
-    console.log(`${response.body.current.weather_descriptions[0]}. It is currently ${response.body.current.temperature} degress out.It feels like ${response.body.current.feelslike} degrees out`)
+    if(error){
+        console.log('Unable to connect to weather service!')
+    }else if(response.body.error){
+        console.log('Unable to find location')
+    }else{
+        console.log(`${response.body.current.weather_descriptions[0]}. It is currently ${response.body.current.temperature} degress out.It feels like ${response.body.current.feelslike} degrees out`)
+    }    
 })
 
 //Request mapbox geocoding API
@@ -29,5 +35,14 @@ request({
     uri:uri,
     json:true
 },(error,response)=>{
-    console.log(`${response.body.features[0].place_name}, Longitude:${response.body.features[0].center[0]},Latitude:${response.body.features[0].center[1]}`)
+    if(error){
+        console.log('Unable to connect to weather service!')
+    }else if(response.body.features.length === 0){
+        console.log('Unable to find location')
+    }else{
+        const longitude = response.body.features[0].center[0];
+        const latitude = response.body.features[0].center[1];
+        const place = response.body.features[0].place_name;       
+        console.log(`${place}, Longitude:${longitude},Latitude:${latitude}`)
+    }    
 })
