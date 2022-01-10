@@ -6,11 +6,18 @@ const app = express();
 console.log(__dirname);
 console.log(__filename);
 
-const publicDirectoryPath = path.join(__dirname, '../public')
+// Define paths for Express config
+const publicDirectoryPath = path.join(__dirname, '../public');
+const viewsPath = path.join(__dirname, '../templates')
+
+// Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
-//Render handlebars for view engine templates
+// Setup handlebars engine and views location
+app.set('views', viewsPath)
 app.set('view engine','hbs');
+
+//Routes
 
 /*
 app.get('', (req, res) => {
