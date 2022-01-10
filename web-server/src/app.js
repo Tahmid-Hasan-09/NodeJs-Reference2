@@ -69,7 +69,7 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {    
     res.render('about', { 
         title: 'About Me',
-        name: 'Andrew Mead'
+        name: 'Tahmid Hasan'
     }) 
 })
 
@@ -77,7 +77,7 @@ app.get('/help',(req,res)=>{
     res.render('help',{
         message:'Please Help!!It\'s an emergency!',
         title: 'Help title',
-        name: 'Andrew Mead'
+        name: 'Tahmid Hasan'
     })
 })
 
@@ -85,6 +85,22 @@ app.get('/weather', (req, res) => {
     res.send({
         forecast: 'It is snowing',
         location: 'Philadelphia'
+    })
+})
+
+app.get('/help/*',(req,res)=>{
+    res.render('404',{
+        title:'404',
+        name:'Tahmid Hasan',
+        errorMessage:'Help Article Not Found'
+    })
+})
+
+app.get('*',(req,res)=>{
+    res.render('404',{
+        title:'404',
+        name:'Tahmid Hasan',
+        errorMessage:'Page Not Found'
     })
 })
 
