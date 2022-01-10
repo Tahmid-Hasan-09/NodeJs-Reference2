@@ -95,7 +95,7 @@ app.get('/help/*',(req,res)=>{
         errorMessage:'Help Article Not Found'
     })
 })
-
+ 
 app.get('*',(req,res)=>{
     res.render('404',{
         title:'404',
