@@ -1,6 +1,6 @@
 const path = require('path')
 const express = require('express')
-const app = express()
+const app = express();
 
 //Node Provided Variable
 console.log(__dirname);
@@ -8,6 +8,9 @@ console.log(__filename);
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 app.use(express.static(publicDirectoryPath));
+
+//Render handlebars for view engine templates
+app.set('view engine','hbs');
 
 /*
 app.get('', (req, res) => {
@@ -45,6 +48,26 @@ app.get('/about', (req, res) => {
 })
 
 */
+
+app.get('/', (req, res) => {
+    res.render('index', { 
+        title: 'Weather',
+        name: 'Andrew Mead'
+    })
+})
+ 
+app.get('/about', (req, res) => {    
+    res.render('about', { 
+        title: 'About Me',
+        name: 'Andrew Mead'
+    })
+})
+
+app.get('/help',(req,res)=>{
+    res.render('help',{
+        message:'Please Help!!It\'s an emergency!'
+    })
+})
 
 app.get('/weather', (req, res) => {
     res.send({
