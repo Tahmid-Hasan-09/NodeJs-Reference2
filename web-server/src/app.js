@@ -2,6 +2,8 @@ const path = require('path')
 const express = require('express')
 const app = express();
 const hbs = require('hbs');
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 
 //Node Provided Variable
 console.log(__dirname);
@@ -87,11 +89,27 @@ app.get('/weather', (req, res) => {
             error:'You must provide a search term'
         })
     }
-    res.send({
-        forecast: 'It is snowing',
-        location: 'Philadelphia',
-        address: req.query.search
+
+    geocode(req.query.search,(error,data)=>{
+        if(error){
+            return res.send({error});
+        }
+        forecast(data.latitude,data.longitude,(error,forecastData)=>{
+            if(error){
+                return res.send({error});
+            }
+            res.send({
+                forecast:forecastData,
+                location:data.place,
+                address:req.query.search
+            })
+        })
     })
+    // res.send({
+    //     forecast: 'It is snowing',
+    //     location: 'Philadelphia',
+    //     address: req.query.search
+    // })
 })
 
 app.get('/products', (req, res) => {
