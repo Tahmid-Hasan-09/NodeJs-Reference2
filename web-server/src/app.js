@@ -90,7 +90,7 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode(req.query.search,(error,data)=>{
+    geocode(req.query.search,(error,data)=>{ //geocode(req.query.search, (error, {longitude,latitude,place} = {}) => {
         if(error){
             return res.send({error});
         }
@@ -104,12 +104,7 @@ app.get('/weather', (req, res) => {
                 address:req.query.search
             })
         })
-    })
-    // res.send({
-    //     forecast: 'It is snowing',
-    //     location: 'Philadelphia',
-    //     address: req.query.search
-    // })
+    }) 
 })
 
 app.get('/products', (req, res) => {
