@@ -84,13 +84,13 @@ app.get('/help',(req,res)=>{
 })
 
 app.get('/weather', (req, res) => {
-    if(!req.query.search){
+    if(!req.query.address){
         return res.send({
             error:'You must provide a search term'
         })
     }
 
-    geocode(req.query.search,(error,data)=>{ //geocode(req.query.search, (error, {longitude,latitude,place} = {}) => {
+    geocode(req.query.address,(error,data)=>{ //geocode(req.query.address, (error, {longitude,latitude,place} = {}) => {
         if(error){
             return res.send({error});
         }
@@ -101,7 +101,7 @@ app.get('/weather', (req, res) => {
             res.send({
                 forecast:forecastData,
                 location:data.place,
-                address:req.query.search
+                address:req.query.address
             })
         })
     }) 
