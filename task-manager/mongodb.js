@@ -49,16 +49,27 @@ MongoClient.connect(connectionURL, {
     //     console.log(result)
     // })
 
-    // db.collection('tasks').insertMany([{
-    //     description: 'Man is Mortal',
-    //     completed: true
-    // }, {
-    //     description: 'The job must have been completed',
-    //     completed: false
-    // }], (error, newlyInserted) => {
-    //     if (error) {
-    //         return console.log('Unable to insert documents!');
-    //     }
-    //     console.log(newlyInserted)
-    // })
+    db.collection('tasks').insertMany([{
+        description: 'Man is Mortal',
+        completed: true
+    }, {
+        description: 'The job must have been completed',
+        completed: false
+    },{
+        description: 'Clean the house',
+        completed: true
+    },{
+        description: 'Renew inspection',
+        completed: false
+    },{
+        description: 'Pot plants',
+        completed: false
+    }], (error, newlyInserted) => {
+        if (error) {
+            return console.log('Unable to insert documents!');
+        }
+        console.log(newlyInserted)
+    })
+
+    
 })
