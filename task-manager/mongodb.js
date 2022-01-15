@@ -71,5 +71,24 @@ MongoClient.connect(connectionURL, {
     //     console.log(newlyInserted)
     // })
 
-    
+    // db.collection('users').findOne({ _id: new ObjectId("61e043ab032fd65f4304f444") }, (error, user) => {
+    //     if (error) {
+    //         return console.log('Unable to fetch')
+    //     }
+
+    //     console.log(user)
+    // })
+
+    // db.collection('users').find({ age: 27 }).toArray((error, users) => {
+    //     console.log(users)
+    // })
+
+    db.collection('tasks').findOne({_id: new ObjectId('61e10ef5d46a458f0b294ff4')},
+    (error,task)=>{
+        console.log(task)
+    })
+
+    db.collection('tasks').find({completed:false}).toArray((error,tasks)=>{
+        console.log(tasks)
+    })
 })
