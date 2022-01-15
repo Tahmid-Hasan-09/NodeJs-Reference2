@@ -83,12 +83,12 @@ MongoClient.connect(connectionURL, {
     //     console.log(users)
     // })
 
-    db.collection('tasks').findOne({_id: new ObjectId('61e10ef5d46a458f0b294ff4')},
-    (error,task)=>{
-        console.log(task)
-    })
+    // db.collection('tasks').findOne({_id: new ObjectId('61e10ef5d46a458f0b294ff4')},
+    // (error,task)=>{
+    //     console.log(task)
+    // })
 
-    db.collection('tasks').find({completed:false}).toArray((error,tasks)=>{
-        console.log(tasks)
-    })
+    // db.collection('tasks').find({completed:false}).toArray((error,tasks)=>{
+    //     console.log(tasks)
+    // })
 })
