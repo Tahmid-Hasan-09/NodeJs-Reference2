@@ -92,24 +92,24 @@ MongoClient.connect(connectionURL, {
     //     console.log(tasks)
     // })
 
-    db.collection('users').updateOne({
-        _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
-    }, {
-        $inc: {
-            age: 1
-        }
-    }).then((result) => {
-        console.log(result)
-    }).catch((error) => {
-        console.log(error)
-    })
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
+    // }, {
+    //     $inc: {
+    //         age: 1
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
 
-    db.collection('tasks').updateMany({completed:false},
-        {
-            $set:{completed:true}
-        }).then((task=>{
-            console.log(task);
-        })).catch((error)=>{
-            console.log(error)
-        })
+    // db.collection('tasks').updateMany({completed:false},
+    //     {
+    //         $set:{completed:true}
+    //     }).then((task=>{
+    //         console.log(task);
+    //     })).catch((error)=>{
+    //         console.log(error)
+    //     })
 })
