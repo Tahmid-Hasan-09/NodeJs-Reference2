@@ -1,3 +1,4 @@
+/***************** Setup MongoDB *********************/
 // const mongodb = require('mongodb');
 // const MongoClient = mongodb.MongoClient;
 // const ObjectId = mongodb.ObjectId;
@@ -6,12 +7,14 @@ const {MongoClient,ObjectId} = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
 
+/***************** Generating ObjectId manually *********************/
 // const id = new ObjectId();
 // console.log(id)
 // console.log(id.getTimestamp())
 // console.log(id.id.length)
 // console.log(id.toHexString().length)
 
+/***************** MongoDB connection Setup Using MongoClient *********************/
 MongoClient.connect(connectionURL, {
     useNewUrlParser: true
 }, (error, client) => {
@@ -19,9 +22,12 @@ MongoClient.connect(connectionURL, {
         return console.log('Unable to connect to database!')
     }
 
+    /***************** Database Create *********************/
     const db = client.db(databaseName);
+    /***************** Create Collection/Table *********************/
     const collection = db.collection('users');
 
+    /***************** Inserting One *********************/
     // collection.insertOne({
     //     // _id:id,
     //     name:'Munzir Khan',
@@ -33,6 +39,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(newUser)
     // })
 
+    /***************** Inserting Many *********************/
     // db.collection('users').insertMany([
     //     {
     //         name: 'Jen',
@@ -49,6 +56,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(result)
     // })
 
+    /***************** Inserting Many *********************/
     // db.collection('tasks').insertMany([{
     //     description: 'Man is Mortal',
     //     completed: true
@@ -71,6 +79,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(newlyInserted)
     // })
 
+    /***************** Finding Documents Using findOne *********************/
     // db.collection('users').findOne({ _id: new ObjectId("61e043ab032fd65f4304f444") }, (error, user) => {
     //     if (error) {
     //         return console.log('Unable to fetch')
@@ -79,19 +88,23 @@ MongoClient.connect(connectionURL, {
     //     console.log(user)
     // })
 
+    /***************** Finding Documents Using find *********************/
     // db.collection('users').find({ age: 27 }).toArray((error, users) => {
     //     console.log(users)
     // })
 
+    /***************** Finding Documents Using findOne *********************/
     // db.collection('tasks').findOne({_id: new ObjectId('61e10ef5d46a458f0b294ff4')},
     // (error,task)=>{
     //     console.log(task)
     // })
-
+    
+    /***************** Finding Documents Using find *********************/
     // db.collection('tasks').find({completed:false}).toArray((error,tasks)=>{
     //     console.log(tasks)
     // })
 
+    /***************** Updating Documents Using updateOne *********************/
     // db.collection('users').updateOne({
     //     _id: new ObjectID("5c0fe6634362c1fb75b9d6b5")
     // }, {
@@ -104,6 +117,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(error)
     // })
 
+    /***************** Updating Documents Using updateMany *********************/
     // db.collection('tasks').updateMany({completed:false},
     //     {
     //         $set:{completed:true}
@@ -113,6 +127,7 @@ MongoClient.connect(connectionURL, {
     //         console.log(error)
     //     })
 
+    /***************** Deleting Documents Using deleteMany *********************/
     // db.collection('users').deleteMany({
     //     age: 27
     // }).then((result) => {
@@ -121,6 +136,7 @@ MongoClient.connect(connectionURL, {
     //     console.log(error)
     // })
 
+    /***************** Deleting Documents Using deleteOne *********************/
     // db.collection('tasks').deleteOne({
     //     description:'Man is Mortal'
     // }).then((result)=>{
