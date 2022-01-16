@@ -113,19 +113,19 @@ MongoClient.connect(connectionURL, {
     //         console.log(error)
     //     })
 
-    db.collection('users').deleteMany({
-        age: 27
-    }).then((result) => {
-        console.log(result)
-    }).catch((error) => {
-        console.log(error)
-    })
+    // db.collection('users').deleteMany({
+    //     age: 27
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
 
-    db.collection('tasks').deleteOne({
-        description:'Man is Mortal'
-    }).then((result)=>{
-        console.log(result);
-    }).catch((error)=>{
-        console.log(error)
-    })
+    // db.collection('tasks').deleteOne({
+    //     description:'Man is Mortal'
+    // }).then((result)=>{
+    //     console.log(result);
+    // }).catch((error)=>{
+    //     console.log(error)
+    // })
 })
