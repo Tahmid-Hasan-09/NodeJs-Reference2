@@ -1,7 +1,11 @@
+/**************** Require NPM Express *************************/
 const express = require('express')
+/**************** Setup express Router method *************************/
 const router = new express.Router();
+/**************** Require Task Model *************************/
 const Task = require('../models/task')
 
+/**************** Create Task Routes *************************/
 // app.post('/tasks',(req,res)=>{
 //     const task = new Task(req.body);
 //     task.save().then((task)=>{
@@ -21,6 +25,7 @@ router.post('/tasks',async (req,res)=>{
     }
 })
 
+/**************** Read Tasks Route *************************/
 // app.get('/tasks',(req,res)=>{
 //     Task.find({}).then((tasks)=>{
 //         res.send(tasks)
@@ -38,6 +43,7 @@ router.get('/tasks',async (req,res)=>{
     }
 })
 
+/**************** Read Single id task Route *************************/
 // app.get('/tasks/:id',(req,res)=>{
 //     Task.findById(req.params.id).then((task)=>{
 //         if(!task){
@@ -61,6 +67,7 @@ router.get('/tasks/:id',async (req,res)=>{
     }
 })
 
+/**************** Update Task Route *************************/
 router.patch('/tasks/:id',async (req,res)=>{
     const updates = Object.keys(req.body);//convert objects to array(object keys array)
     const allowedUpdates = ['description','completed'];
@@ -80,6 +87,7 @@ router.patch('/tasks/:id',async (req,res)=>{
     }
 })
 
+/**************** Delete Task Route *************************/
 router.delete('/tasks/:id',async (req,res)=>{
     try{
         const task = await Task.findByIdAndDelete(req.params.id);
@@ -92,4 +100,5 @@ router.delete('/tasks/:id',async (req,res)=>{
     }
 })
 
+/**************** Sending all routes by module.exports method *************************/
 module.exports = router

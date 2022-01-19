@@ -1,5 +1,7 @@
+/**************** Require NPM mongoose package *************************/
 const mongoose = require('mongoose');
 
+/**************** Model Creation by mongoose.model method *************************/
 const Task = mongoose.model('Task',{
     description : {
         type : String,
