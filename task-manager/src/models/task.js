@@ -1,8 +1,8 @@
 /**************** Require NPM mongoose package *************************/
 const mongoose = require('mongoose');
 
-/**************** Model Creation by mongoose.model method *************************/
-const Task = mongoose.model('Task',{
+/**************** Schema Creation by mongoose.Schema method *************************/
+const taskSchema = new mongoose.Schema({
     description : {
         type : String,
         trim : true,
@@ -14,5 +14,7 @@ const Task = mongoose.model('Task',{
         default : false
     }
 })
+/**************** Model Creation by mongoose.model method *************************/
+const Task = mongoose.model('Task',taskSchema)
 
 module.exports = Task

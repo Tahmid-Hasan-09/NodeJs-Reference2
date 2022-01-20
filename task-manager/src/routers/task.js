@@ -69,6 +69,7 @@ router.get('/tasks/:id',async (req,res)=>{
 
 /**************** Update Task Route *************************/
 router.patch('/tasks/:id',async (req,res)=>{
+    /**************** Send 404 if client tries to update non-existent field ***********/
     const updates = Object.keys(req.body);//convert objects to array(object keys array)
     const allowedUpdates = ['description','completed'];
     const isValidOperation = updates.every((update)=>allowedUpdates.includes(update));
@@ -77,7 +78,13 @@ router.patch('/tasks/:id',async (req,res)=>{
     }
 
     try{
-        const task = await Task.findByIdAndUpdate(req.params.id,req.body,{ new:true, runValidators:true });
+        //Without Save method middleware cannot be applied
+        const task = await Task.findById(req.params.id);
+        updates.forEach((update)=>{
+            task[update] = req.body[update]
+        })
+        await task.save();
+        // const task = await Task.findByIdAndUpdate(req.params.id,req.body,{ new:true, runValidators:true });
         if(!task){
             return res.status(404).send();
         }

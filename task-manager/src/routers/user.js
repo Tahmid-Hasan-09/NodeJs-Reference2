@@ -75,7 +75,8 @@ router.get('/users/:id', async (req, res) => {
 
 /**************** Update User Route *************************/
 router.patch('/users/:id', async (req, res) => {
-    const updates = Object.keys(req.body)
+    /**************** Send 404 if client tries to update non-existent field ***********/
+    const updates = Object.keys(req.body) //Convert Object to array
     const allowedUpdates = ['name', 'email', 'password', 'age']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
@@ -84,7 +85,13 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        const user = await User.findById(req.params.id);
+        //Without Save method middleware cannot be applied
+        updates.forEach((update)=>{
+            user[update] = req.body[update]
+        })
+        await user.save();
+        // const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
     
         if (!user) {
             return res.status(404).send()

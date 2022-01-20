@@ -1,9 +1,10 @@
 /**************** Require NPM package *************************/
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
-/**************** Model Creation by mongoose.model method *************************/
-const User = mongoose.model('User', {
+/**************** Schema Creation by mongoose.Schema method *************************/
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required : true,
@@ -41,5 +42,16 @@ const User = mongoose.model('User', {
         }
     }
 })
+
+/**************** Hash Password Before Saving to DB *************************/
+userSchema.pre('save',async function(next){
+    const user = this
+    if(user.isModified('password')){
+        user.password = await bcrypt.hash(user.password,8); 
+    }
+    next();
+})
+/**************** Model Creation by mongoose.model method *************************/
+const User = mongoose.model('User',userSchema);
 
 module.exports = User
