@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 /**************** Schema Creation by mongoose.Schema method *************************/
 const userSchema = new mongoose.Schema({
@@ -41,10 +42,27 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be a positive number');//Register/Show new Error
             }
         }
-    }
+    },
+    tokens:[
+        {
+            token:{
+                type:String,
+                required : true
+            }
+        }
+    ]
 })
 
-/**************** Custom method/function findByCredentials *************************/
+/**************** Custom method function for single instance generateAuthTokens ********************/
+userSchema.methods.generateAuthTokens = async function(){
+    const user = this
+    const token = jwt.sign({_id : user._id.toString()},'thisismynewcourse');
+    user.tokens.push({token});
+    await user.save();
+    return token;
+}
+
+/**************** Custom Model function findByCredentials *************************/
 userSchema.statics.findByCredentials = async (email,password) =>{
     const user = await User.findOne({email:email});
     if(!user){
