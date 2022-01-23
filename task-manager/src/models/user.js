@@ -49,10 +49,20 @@ const userSchema = new mongoose.Schema({
                 type:String,
                 required : true
             }
-        }
+        } 
     ]
 })
 
+/**************** Custom method function for single instance get PublicProfile ********************/
+userSchema.methods.toJSON = function(){ //userSchema.methods.getPublicProfile = function(){
+    const user = this;
+    const userObj = user.toObject();//Recreate a copy of the user variable
+
+    delete userObj.password
+    delete userObj.tokens
+    
+    return userObj
+}
 /**************** Custom method function for single instance generateAuthTokens ********************/
 userSchema.methods.generateAuthTokens = async function(){
     const user = this

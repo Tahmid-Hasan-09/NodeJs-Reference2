@@ -36,6 +36,7 @@ router.post('/users/login',async (req,res)=>{
         const user = await User.findByCredentials(req.body.email,req.body.password);
         //Generate a token & Send Back to the User
         const token = await user.generateAuthTokens();
+        // res.send({user:user.getPublicProfile(),token});//Hide Data by creating custom method
         res.send({user,token});
     }catch(error){
         res.status(400).send();
