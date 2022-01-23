@@ -8,15 +8,6 @@ const User = require('../models/user')
 const auth = require('../middleware/auth');
 
 /**************** Create User Routes *************************/
-// app.post('/users',(req,res)=>{
-//     const user = new User(req.body);
-//     user.save().then((user)=>{
-//         res.status(201).send(user)
-//     }).catch((error)=>{
-//         res.status(404).send(error)
-//     })
-// })
-
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
 
@@ -67,6 +58,62 @@ router.post('/users/logoutAll',auth,async (req,res)=>{
     }
 })
 
+/**************** Read Single User Profile Route *************************/
+router.get('/users/me',auth,async (req,res)=>{
+    res.send(req.user);
+})
+
+/**************** Update User Route *************************/
+router.patch('/users/me',auth, async (req, res) => {
+    /**************** Send 404 if client tries to update non-existent field ***********/
+    const updates = Object.keys(req.body) //Convert Object to array
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        //Without Save method mongoose middleware cannot be applied
+        updates.forEach((update)=>{
+            req.user[update] = req.body[update]
+        })
+        await req.user.save();    
+        res.send(req.user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+/**************** Delete User Route *************************/
+router.delete('/users/me',auth, async (req, res) => {
+    try {
+        // const user = await User.findByIdAndDelete(req.user._id)
+        await req.user.remove();
+        res.send(req.user)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+/**************** Sending all routes by module.exports method *************************/
+module.exports = router
+
+
+
+
+/************************* Older Routes Before Update *************************/
+/**************** Create User Routes *************************/
+// app.post('/users',(req,res)=>{
+//     const user = new User(req.body);
+//     user.save().then((user)=>{
+//         res.status(201).send(user)
+//     }).catch((error)=>{
+//         res.status(404).send(error)
+//     })
+// })
+
 /**************** Read Users Route *************************/
 // app.get('/users',(req,res)=>{
 //     User.find({}).then((users)=>{
@@ -84,11 +131,6 @@ router.post('/users/logoutAll',auth,async (req,res)=>{
 //         res.status(500).send()
 //     }
 // })
-
-/**************** Read Single User Profile Route *************************/
-router.get('/users/me',auth,async (req,res)=>{
-    res.send(req.user);
-})
 
 /**************** Read Single id User Route *************************/
 // app.get('/users/:id',(req,res)=>{
@@ -148,27 +190,6 @@ router.get('/users/me',auth,async (req,res)=>{
 //         res.status(400).send(e)
 //     }
 // })
-router.patch('/users/me',auth, async (req, res) => {
-    /**************** Send 404 if client tries to update non-existent field ***********/
-    const updates = Object.keys(req.body) //Convert Object to array
-    const allowedUpdates = ['name', 'email', 'password', 'age']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
-    }
-
-    try {
-        //Without Save method mongoose middleware cannot be applied
-        updates.forEach((update)=>{
-            req.user[update] = req.body[update]
-        })
-        await req.user.save();    
-        res.send(req.user)
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
 
 /**************** Delete User Route *************************/
 // router.delete('/users/:id', async (req, res) => {
@@ -184,15 +205,3 @@ router.patch('/users/me',auth, async (req, res) => {
 //         res.status(500).send()
 //     }
 // })
-router.delete('/users/me',auth, async (req, res) => {
-    try {
-        // const user = await User.findByIdAndDelete(req.user._id)
-        await req.user.remove();
-        res.send(req.user)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
-/**************** Sending all routes by module.exports method *************************/
-module.exports = router
