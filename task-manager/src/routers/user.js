@@ -4,6 +4,8 @@ const express = require('express');
 const router = new express.Router();
 /**************** Require User Model *************************/
 const User = require('../models/user')
+/**************** Require Middleware function *************************/
+const auth = require('../middleware/auth');
 
 /**************** Create User Routes *************************/
 // app.post('/users',(req,res)=>{
@@ -49,13 +51,18 @@ router.post('/users/login',async (req,res)=>{
 //     })
 // })
 
-router.get('/users', async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.send(users)
-    } catch (e) {
-        res.status(500).send()
-    }
+// router.get('/users', auth, async (req, res) => {
+//     try {
+//         const users = await User.find({})
+//         res.send(users)
+//     } catch (e) {
+//         res.status(500).send()
+//     }
+// })
+
+/**************** Read Single User Profile Route *************************/
+router.get('/users/me',auth,async (req,res)=>{
+    res.send(req.user);
 })
 
 /**************** Read Single id User Route *************************/
