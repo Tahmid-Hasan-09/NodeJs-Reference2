@@ -42,6 +42,30 @@ router.post('/users/login',async (req,res)=>{
     }
 })
 
+/**************** User Log Out Route for current session(current authToken) **************/
+router.post('/users/logout',auth,async (req,res)=>{
+    try{
+       req.user.tokens = req.user.tokens.filter((token)=>{
+           return token.token !==req.token;
+       }) 
+       await req.user.save();
+       res.send('You are successfully logged out');
+    }catch(error){
+        res.status(500).send();
+    }
+})
+
+/**************** User Log Out Route for all session(all authToken) **************/
+router.post('/users/logoutAll',auth,async (req,res)=>{
+    try{
+        req.user.tokens = [];
+        await req.user.save();
+        res.send('You are logged out from all sessions')
+    }catch(error){
+        res.status(500).send();
+    }
+})
+
 /**************** Read Users Route *************************/
 // app.get('/users',(req,res)=>{
 //     User.find({}).then((users)=>{
