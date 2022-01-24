@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
         } 
     ]
 })
+/**************** Virtual Property Of User Model********************/
+userSchema.virtual('tasks',{
+    ref:'Task',
+    localField : '_id',
+    foreignField : 'owner'
+})
 
 /**************** Custom method function for single instance get PublicProfile ********************/
 userSchema.methods.toJSON = function(){ //userSchema.methods.getPublicProfile = function(){

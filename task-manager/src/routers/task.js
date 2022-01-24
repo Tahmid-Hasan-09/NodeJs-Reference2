@@ -4,6 +4,8 @@ const express = require('express')
 const router = new express.Router();
 /**************** Require Task Model *************************/
 const Task = require('../models/task')
+/**************** Require auth middleware *************************/
+const auth = require('../middleware/auth');
 
 /**************** Create Task Routes *************************/
 // app.post('/tasks',(req,res)=>{
@@ -15,8 +17,12 @@ const Task = require('../models/task')
 //     })
 // })
 
-router.post('/tasks',async (req,res)=>{
-    const task = new Task(req.body);
+router.post('/tasks',auth,async (req,res)=>{
+    // const task = new Task(req.body);
+    const task = new Task({
+        ...req.body,
+        owner : req.user._id
+    })
     try {
         await task.save();
         res.status(201).send(task)
