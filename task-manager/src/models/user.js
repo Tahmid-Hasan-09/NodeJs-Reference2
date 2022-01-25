@@ -53,6 +53,8 @@ const userSchema = new mongoose.Schema({
             }
         } 
     ]
+},{
+    timestamps : true
 })
 /**************** Virtual Property Of User Model********************/
 userSchema.virtual('tasks',{

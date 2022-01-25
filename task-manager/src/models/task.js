@@ -18,6 +18,8 @@ const taskSchema = new mongoose.Schema({
         required : true,
         ref :'User'
     }
+},{
+    timestamps : true
 })
 /**************** Model Creation by mongoose.model method *************************/
 const Task = mongoose.model('Task',taskSchema)
