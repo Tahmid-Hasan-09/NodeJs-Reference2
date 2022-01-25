@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+/**************** Require Task Model *************************/
+const Task = require('./task');
 
 /**************** Schema Creation by mongoose.Schema method *************************/
 const userSchema = new mongoose.Schema({
@@ -93,12 +95,19 @@ userSchema.statics.findByCredentials = async (email,password) =>{
     }
 }
 
+/*********************** Mongoose Middleware *************************/
 /**************** Hash Password Before Saving to DB *************************/
 userSchema.pre('save',async function(next){
     const user = this
     if(user.isModified('password')){
         user.password = await bcrypt.hash(user.password,8); 
     }
+    next();
+})
+/**************** Delete User Tasks when User itself deleted *************************/
+userSchema.pre('remove',async function(next){
+    const user = this;
+    await Task.deleteMany({owner:user._id});
     next();
 })
 /**************** Model Creation by mongoose.model method *************************/
