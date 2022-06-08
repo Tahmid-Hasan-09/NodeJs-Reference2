@@ -42,7 +42,7 @@ const notes = require('./notes.js')
 
 /*---------Manipulate Command Line Arguments By 'yargs' package-------*/
 const yargs = require('yargs');
-const { string } = require('yargs');
+
 yargs.version('1.1.1');
 //create add comand
 yargs.command({
@@ -79,7 +79,7 @@ yargs.command({
             type:'string'
         }
     },
-    handler:function(argv){
+    handler(argv){
         notes.removeNote(argv.title);
     }
 })

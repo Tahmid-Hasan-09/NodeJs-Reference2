@@ -10,8 +10,8 @@ const add = (a, b) => {
 }
 
 const doWork = async ()=>{
-    // throw new Error('Something Went Wrong!')
-    // return 'Tahmid Hasan'
+    // throw new Error('Something Went Wrong!') //reject
+    // return 'Tahmid Hasan' //resolve
     const sum = await add(1, 99)
     const sum2 = await add(sum, 50)
     const sum3 = await add(sum2, -3)

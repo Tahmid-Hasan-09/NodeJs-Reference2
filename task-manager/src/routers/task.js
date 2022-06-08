@@ -20,7 +20,7 @@ const auth = require('../middleware/auth');
 router.post('/tasks',auth,async (req,res)=>{
     // const task = new Task(req.body);
     const task = new Task({
-        ...req.body,
+        ...req.body, //Es6 spread operator that copy everything from body in this new task obj
         owner : req.user._id
     })
     try {
@@ -50,13 +50,22 @@ router.get('/tasks',auth,async (req,res)=>{
         match.completed = req.query.completed === 'true'
     }
     if(req.query.sortBy){
-        const parts = req.query.sortBy.split(':'); //split/separate string by special character
-        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
+        const parts = req.query.sortBy.split(':'); //split/separate string by special chracter
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1; //1=ascending;-1=descending;dynamic 
+                                             //property name used,that's why [] used instead .
     }
     try{
         await req.user.populate({
             path: 'tasks',
+
+            /***** Trying to match which tasks should be fetched(Limiting)
+            match: {
+                completed:false
+            }
+            */
+           
             match:match,
+            //Pagination & Sorting
             options:{
                 limit:parseInt(req.query.limit),
                 skip:parseInt(req.query.skip),

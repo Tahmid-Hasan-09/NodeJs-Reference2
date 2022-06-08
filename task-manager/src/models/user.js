@@ -52,31 +52,37 @@ const userSchema = new mongoose.Schema({
                 required : true
             }
         } 
-    ]
+    ],
+    avatar:{
+        type:Buffer
+    }
 },{
     timestamps : true
 })
 /**************** Virtual Property Of User Model********************/
+//defines a virtual relationship between two models not storing in database
 userSchema.virtual('tasks',{
     ref:'Task',
-    localField : '_id',
-    foreignField : 'owner'
+    localField : '_id', // Directs to this User Model field _id
+    foreignField : 'owner' // Directs to Task Model owner field object id
 })
 
 /**************** Custom method function for single instance get PublicProfile ********************/
+//It's gonna get called whenever that object get stringified(converted to json format)
 userSchema.methods.toJSON = function(){ //userSchema.methods.getPublicProfile = function(){
     const user = this;
     const userObj = user.toObject();//Recreate a copy of the user variable
 
     delete userObj.password
     delete userObj.tokens
+    delete userObj.avatar
     
     return userObj
 }
 /**************** Custom method function for single instance generateAuthTokens ********************/
 userSchema.methods.generateAuthTokens = async function(){
     const user = this
-    const token = jwt.sign({_id : user._id.toString()},'thisismynewcourse');
+    const token = jwt.sign({_id : user._id.toString()},process.env.JWT_SECRET);
     user.tokens.push({token});
     await user.save();
     return token;
